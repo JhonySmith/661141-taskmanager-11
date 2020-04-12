@@ -8,13 +8,15 @@ export const createTaskCardTemlate = (task) => {
 
   const {date, time} = dateTimeConverter(isDateShowing, dueDate);
 
-  const repeatClass = Object.values(repeatingDays).some(Boolean) ? `card-repeat` : ``;
+  const isRepeatingDays = Object.values(repeatingDays).some(Boolean);
+
+  const isRepeatDaysClass = isRepeatingDays ? `card-repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
   const archiveButtonInactiveClass = isArchive ? `` : `card__btn--disabled`;
   const favoriteButtonInactiveClass = isFavorite ? `` : `card__btn--disabled`;
 
   return (
-    `<article class="card card--${color} ${repeatClass} ${deadlineClass}">
+    `<article class="card card--${color} ${isRepeatDaysClass} ${deadlineClass}">
             <div class="card__form">
               <div class="card__inner">
                 <div class="card__control">
