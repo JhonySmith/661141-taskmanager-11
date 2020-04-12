@@ -7,7 +7,6 @@ import {createTaskEditTemplate} from "./components/task-edit";
 import {generateTasksArray} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
 const CARDS_NUMBER = 22;
-const CARDS_NUMBER_START = 8;
 const CARDS_NUMBER_STEP = 8;
 
 const tasks = generateTasksArray(CARDS_NUMBER);
@@ -29,7 +28,7 @@ const taskListBoard = pageMain.querySelector(`.board__tasks`);
 
 renderSection(taskListBoard, createTaskEditTemplate(tasks[0]));
 
-let showingTasksCount = CARDS_NUMBER_START;
+let showingTasksCount = CARDS_NUMBER_STEP;
 
 tasks.slice(1, showingTasksCount)
   .forEach((task) => renderSection(taskListBoard, createTaskCardTemlate(task), `beforeend`));
