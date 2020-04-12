@@ -4,13 +4,13 @@ import {createFilterPanelTemplate} from "./components/filter-panel";
 import {createLoadMoreButtonTemplate} from "./components/load-more-button";
 import {createTaskCardTemlate} from "./components/task-card";
 import {createTaskEditTemplate} from "./components/task-edit";
-import {generateTasks} from "./mock/task.js";
+import {generateTasksArray} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
 const CARDS_NUMBER = 22;
 const CARDS_NUMBER_START = 8;
 const CARDS_NUMBER_STEP = 8;
 
-const tasks = generateTasks(CARDS_NUMBER);
+const tasks = generateTasksArray(CARDS_NUMBER);
 const filters = generateFilters();
 
 const renderSection = (placeInDocument, section, position = `beforeend`) => {

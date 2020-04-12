@@ -43,7 +43,7 @@ const generateRepeatingDate = () => {
   return repeatingDate;
 };
 
-const generateTask = () => {
+const generateTaskData = () => {
   const dueDate = Math.random() > 0.5 ? null : getRandomDate();
   const description = getRandomArrElement(descriptionItems);
   const repeatingDays = dueDate ? defaultRepeatingDays : generateRepeatingDate();
@@ -61,10 +61,10 @@ const generateTask = () => {
   };
 };
 
-const generateTasks = (count) => {
+const generateTasksArray = (count) => {
   return new Array(count)
   .fill(``)
-  .map(generateTask);
+  .map(generateTaskData);
 };
 
-export {generateTask, generateTasks};
+export {generateTaskData, generateTasksArray};
