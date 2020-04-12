@@ -45,14 +45,19 @@ const generateRepeatingDate = () => {
 
 const generateTask = () => {
   const dueDate = Math.random() > 0.5 ? null : getRandomDate();
+  const description = getRandomArrElement(descriptionItems);
+  const repeatingDays = dueDate ? defaultRepeatingDays : generateRepeatingDate();
+  const color = getRandomArrElement(COLORS);
+  const isArchive = Math.random() > 0.5;
+  const isFavorite = Math.round() > 0.5;
 
   return {
-    description: getRandomArrElement(descriptionItems),
+    description,
     dueDate,
-    repeatingDays: dueDate ? defaultRepeatingDays : generateRepeatingDate(),
-    color: getRandomArrElement(COLORS),
-    isArchive: Math.random() > 0.5,
-    isFavorite: Math.round() > 0.5,
+    repeatingDays,
+    color,
+    isArchive,
+    isFavorite,
   };
 };
 
