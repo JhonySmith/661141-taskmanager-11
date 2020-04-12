@@ -1,13 +1,13 @@
 
 import {COLORS} from "../const.js";
 
-const DescriptionItems = [
+const descriptionItems = [
   `Изучить теорию`,
   `Сделать домашку`,
   `Пройти интенсив на соточку`
 ];
 
-const DefaultRepeatingDays = {
+const defaultRepeatingDays = {
   "mo": false,
   "tu": false,
   "we": false,
@@ -36,24 +36,20 @@ const getRandomDate = () => {
 };
 
 const generateRepeatingDate = () => {
-  return Object.assign({}, DefaultRepeatingDays, {
-    "mo": Math.random() > 0.5,
-    "tu": Math.random() > 0.5,
-    "we": Math.random() > 0.5,
-    "th": Math.random() > 0.5,
-    "fr": Math.random() > 0.5,
-    "sa": Math.random() > 0.5,
-    "su": Math.random() > 0.5,
-  });
+  const repeatingDate = {};
+  for (const prop of Object.keys(defaultRepeatingDays)) {
+    repeatingDate[prop] = Math.random() > 0.5;
+  }
+  return repeatingDate;
 };
 
 const generateTask = () => {
   const dueDate = Math.random() > 0.5 ? null : getRandomDate();
 
   return {
-    description: getRandomArrElement(DescriptionItems),
+    description: getRandomArrElement(descriptionItems),
     dueDate,
-    repeatingDays: dueDate ? DefaultRepeatingDays : generateRepeatingDate(),
+    repeatingDays: dueDate ? defaultRepeatingDays : generateRepeatingDate(),
     color: getRandomArrElement(COLORS),
     isArchive: Math.random() > 0.5,
     isFavorite: Math.round() > 0.5,
