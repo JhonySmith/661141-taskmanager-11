@@ -1,5 +1,4 @@
-import {MONTH_NAMES} from "../const.js";
-import {formatTime} from "../utils.js";
+import {dateTimeConverter} from "../utils.js";
 
 export const createTaskCardTemlate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
@@ -7,8 +6,7 @@ export const createTaskCardTemlate = (task) => {
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
 
-  const date = isDateShowing ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
-  const time = isDateShowing ? formatTime(dueDate) : ``;
+  const {date, time} = dateTimeConverter(isDateShowing, dueDate);
 
   const repeatClass = Object.values(repeatingDays).some(Boolean) ? `card-repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
