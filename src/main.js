@@ -1,20 +1,18 @@
-import {createMenuListTemlate} from "./components/menu-list";
-import {createBoardTemplate} from "./components/board";
-import {createFilterPanelTemplate} from "./components/filter-panel";
-import {createLoadMoreButtonTemplate} from "./components/load-more-button";
-import {createTaskCardTemlate} from "./components/task-card";
-import {createTaskEditTemplate} from "./components/task-edit";
+import MenuListComponent from "./components/menu-list";
+import BoardComponent from "./components/board";
+import FilterPanelComponent from "./components/filter-panel";
+import LoadMoreButtonComponent from "./components/load-more-button";
+import TaskComponent from "./components/task-card";
+import TaskEditComponent from "./components/task-edit";
 import {generateTasksArray} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
+import {renderSection, RenderPosition} from "./utils.js";
+
 const CARDS_NUMBER = 22;
 const CARDS_NUMBER_STEP = 8;
 
 const tasks = generateTasksArray(CARDS_NUMBER);
 const filters = generateFilters();
-
-const renderSection = (placeInDocument, section, position = `beforeend`) => {
-  placeInDocument.insertAdjacentHTML(position, section);
-};
 
 const pageMain = document.querySelector(`.main`);
 const controlMenu = pageMain.querySelector(`.main__control`);

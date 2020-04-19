@@ -1,4 +1,6 @@
-export const createMenuListTemlate = () => {
+import {createElement} from "../utils.js";
+
+const createMenuListTemlate = () => {
   return (
     `<section class="control__btn-wrap">
           <input
@@ -30,3 +32,26 @@ export const createMenuListTemlate = () => {
     </section>`
   );
 };
+
+export default class MenuList {
+  constructor() {
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenuListTemlate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
