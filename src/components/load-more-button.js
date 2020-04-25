@@ -8,7 +8,7 @@ const createLoadMoreButtonTemplate = () => {
 
 export default class LoadMoreButton {
   constructor() {
-    this.element = null;
+    this._element = null;
   }
 
   getTemplate() {

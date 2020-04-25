@@ -33,12 +33,13 @@ export const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-export const render = (placeInDocument, section, position) => {
+export const renderSection = (placeInDocument, section, position) => {
   switch (position) {
     case RenderPosition.AFTERBEGIN:
       placeInDocument.prepend(section);
       break;
     case RenderPosition.BEFOREEND:
       placeInDocument.append(section);
+      break;
   }
 };
