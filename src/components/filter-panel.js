@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 const defaultFilterName = `all`;
 
 const createFilterMarkup = (filter) => {
@@ -18,7 +20,7 @@ const createFilterMarkup = (filter) => {
   );
 };
 
-export const createFilterPanelTemplate = (filters) => {
+const createFilterPanelTemplate = (filters) => {
   const filterMarkup = filters.map((it) => createFilterMarkup(it)).join(`\n`);
 
   return (
@@ -27,3 +29,27 @@ export const createFilterPanelTemplate = (filters) => {
     </section>`
   );
 };
+
+export default class FilterPanel {
+  constructor(filters) {
+    this._filters = filters;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilterPanelTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

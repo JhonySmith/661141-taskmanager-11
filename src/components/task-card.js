@@ -1,6 +1,6 @@
-import {dateTimeConverter} from "../utils.js";
+import {dateTimeConverter, createElement} from "../utils.js";
 
-export const createTaskCardTemlate = (task) => {
+const createTaskCardTemlate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
@@ -60,3 +60,27 @@ export const createTaskCardTemlate = (task) => {
           </article>`
   );
 };
+
+export default class Task {
+  constructor(task) {
+    this._task = task;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskCardTemlate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
