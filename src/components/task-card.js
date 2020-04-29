@@ -1,4 +1,4 @@
-import {dateTimeConverter} from "../utils.js";
+import {dateTimeConverter} from "../utils/common.js";
 import {AbstractComponent} from "./abstract-component.js";
 
 const createTaskCardTemlate = (task) => {

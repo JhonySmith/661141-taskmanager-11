@@ -21,6 +21,15 @@ export const renderSection = (placeInDocument, element, position) => {
   }
 };
 
-export const replace = (parent, newElement, oldElement) => {
-  parent.replaceChild(newElement, oldElement);
+export const replace = (newComponent, oldComponent) => {
+  const parentElement = oldComponent.getElement().parentElement;
+  const newElement = newComponent.getElement();
+  const oldElement = oldComponent.getElement();
+
+  parentElement.replaceChild(newElement, oldElement);
+};
+
+export const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
 };

@@ -8,7 +8,7 @@ import TasksComponent from "./components/tasks";
 import TaskEditComponent from "./components/task-edit";
 import {generateTasksArray} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
-import {renderSection, RenderPosition, replace} from "./utils/render.js";
+import {renderSection, RenderPosition, replace, remove} from "./utils/render.js";
 import NoTaskComponent from "./components/no-task.js";
 
 const CARDS_NUMBER = 22;
@@ -18,11 +18,11 @@ const renderTask = (taskListElement, task) => {
   const taskComponent = new TaskComponent(task);
 
   const replaceTaskToEdit = () => {
-    replace(taskListElement, taskEditComponent.getElement(), taskComponent.getElement());
+    replace(taskEditComponent, taskComponent);
   };
 
   const replaceEditToTask = () => {
-    replace(taskListElement, taskComponent.getElement(), taskEditComponent.getElement());
+    replace(taskComponent, taskEditComponent);
   };
 
   const onEscKeyDown = (evt) => {
@@ -83,8 +83,7 @@ const renderBoard = (boardComponent, tasks) => {
       });
 
     if (showingTasksCount >= tasks.length) {
-      loadMoreButtonComponent.getElement().remove();
-      loadMoreButtonComponent.removeElement();
+      remove(loadMoreButtonComponent);
     }
   });
 };
