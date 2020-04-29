@@ -20,3 +20,7 @@ export const renderSection = (placeInDocument, element, position) => {
       break;
   }
 };
+
+export const replace = (parent, newElement, oldElement) => {
+  parent.replaceChild(newElement, oldElement);
+};
