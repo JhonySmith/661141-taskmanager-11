@@ -8,7 +8,7 @@ import TasksComponent from "./components/tasks";
 import TaskEditComponent from "./components/task-edit";
 import {generateTasksArray} from "./mock/task.js";
 import {generateFilters} from "./mock/filter.js";
-import {renderSection, RenderPosition} from "./utils.js";
+import {renderSection, RenderPosition} from "./utils/render.js";
 import NoTaskComponent from "./components/no-task.js";
 
 const CARDS_NUMBER = 22;
