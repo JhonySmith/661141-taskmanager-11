@@ -1,5 +1,5 @@
 import {dateTimeConverter} from "../utils/common.js";
-import {AbstractComponent} from "./abstract-component.js";
+import AbstractComponent from "./abstract-component.js";
 
 const createTaskCardTemlate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;

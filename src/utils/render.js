@@ -10,13 +10,13 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export const renderSection = (placeInDocument, element, position) => {
+export const renderSection = (placeInDocument, component, position) => {
   switch (position) {
     case RenderPosition.AFTERBEGIN:
-      placeInDocument.prepend(element);
+      placeInDocument.prepend(component.getElement());
       break;
     case RenderPosition.BEFOREEND:
-      placeInDocument.append(element);
+      placeInDocument.append(component.getElement());
       break;
   }
 };

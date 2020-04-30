@@ -1,4 +1,4 @@
-import {AbstractClass} from "./abstract-component.js";
+import AbstractClass from "./abstract-component.js";
 
 const createSortTemplate = () => {
   return (
