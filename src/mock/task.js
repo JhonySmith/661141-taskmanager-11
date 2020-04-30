@@ -1,4 +1,3 @@
-
 import {COLORS} from "../const.js";
 
 const descriptionItems = [

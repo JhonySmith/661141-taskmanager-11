@@ -1,5 +1,6 @@
 import {COLORS, DAYS} from "../const.js";
-import {createElement, dateTimeConverter} from "../utils.js";
+import {dateTimeConverter} from "../utils/common.js";
+import AbstractComponent from "./abstract-component.js";
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors
@@ -136,26 +137,19 @@ const createTaskEditTemplate = (task) => {
   );
 };
 
-export default class TaskEdit {
+export default class TaskEdit extends AbstractComponent {
   constructor(task) {
-    this._task = task;
+    super();
 
-    this._element = null;
+    this._task = task;
   }
 
   getTemplate() {
     return createTaskEditTemplate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setOnSubmit(onObjectSubmit) {
+    this.getElement().querySelector(`form`)
+    .addEventListener(`submit`, onObjectSubmit);
   }
 }

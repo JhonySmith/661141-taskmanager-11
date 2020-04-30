@@ -1,4 +1,5 @@
-import {dateTimeConverter, createElement} from "../utils.js";
+import {dateTimeConverter} from "../utils/common.js";
+import AbstractComponent from "./abstract-component.js";
 
 const createTaskCardTemlate = (task) => {
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
@@ -61,26 +62,19 @@ const createTaskCardTemlate = (task) => {
   );
 };
 
-export default class Task {
+export default class Task extends AbstractComponent {
   constructor(task) {
-    this._task = task;
+    super();
 
-    this._element = null;
+    this._task = task;
   }
 
   getTemplate() {
     return createTaskCardTemlate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setOnClick(onObjectClick) {
+    this.getElement().querySelector(`.card__btn--edit`)
+    .addEventListener(`click`, onObjectClick);
   }
 }

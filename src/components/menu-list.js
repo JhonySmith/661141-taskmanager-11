@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractComponent from "../components/abstract-component.js";
 
 const createMenuListTemlate = () => {
   return (
@@ -33,25 +33,8 @@ const createMenuListTemlate = () => {
   );
 };
 
-export default class MenuList {
-  constructor() {
-
-    this._element = null;
-  }
-
+export default class MenuList extends AbstractComponent {
   getTemplate() {
     return createMenuListTemlate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
