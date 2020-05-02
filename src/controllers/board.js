@@ -1,6 +1,6 @@
 import NoTaskComponent from "../components/no-task.js";
 import LoadMoreButtonComponent from "../components/load-more-button";
-import SortComponent from "../components/sort";
+import SortComponent, {SortType} from "../components/sort";
 import TaskComponent from "../components/task-card";
 import TasksComponent from "../components/tasks";
 import TaskEditComponent from "../components/task-edit";
@@ -43,6 +43,25 @@ const renderTask = (taskListElement, task) => {
   renderSection(taskListElement, taskComponent, RenderPosition.BEFOREEND);
 };
 
+const getSortedTasks = (tasks, sortType, from, to) => {
+  let sortedTasks = [];
+  const showingTasks = tasks.slice();
+
+  switch (sortType) {
+    case SortType.DATE_UP:
+      sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+      break;
+    case SortType.DATE_DOWN:
+      sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+      break;
+    case SortType.DEFAULT:
+      sortedTasks = showingTasks;
+      break;
+  }
+
+  return sortedTasks.slice(from, to);
+};
+
 
 export default class BoardController {
   constructor(container) {
@@ -55,6 +74,28 @@ export default class BoardController {
   }
 
   render(tasks) {
+    const renderLoadMoreButton = () => {
+      if (showingTasksCount >= tasks.length) {
+        return;
+      }
+
+      renderSection(container, this._loadMoreButtonComponent, RenderPosition.BEFOREEND);
+
+      this._loadMoreButtonComponent.setOnClick(() => {
+        const prevTasksCount = showingTasksCount;
+        showingTasksCount = showingTasksCount + CARDS_NUMBER_STEP;
+
+        tasks.slice(prevTasksCount, showingTasksCount)
+        .forEach((task) => {
+          renderTask(taskListElement, task);
+        });
+
+        if (showingTasksCount >= tasks.length) {
+          remove(this._loadMoreButtonComponent);
+        }
+      });
+    };
+
     const container = this._container.getElement();
     const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
@@ -74,20 +115,21 @@ export default class BoardController {
         renderTask(taskListElement, task);
       });
 
-    renderSection(container, this._loadMoreButtonComponent, RenderPosition.BEFOREEND);
+    renderLoadMoreButton();
 
-    this._loadMoreButtonComponent.setOnClick(() => {
-      const prevTasksCount = showingTasksCount;
-      showingTasksCount = showingTasksCount + CARDS_NUMBER_STEP;
+    this._sortComponent.setSortTypeChangeClick((sortType) => {
+      showingTasksCount = CARDS_NUMBER_STEP;
 
-      tasks.slice(prevTasksCount, showingTasksCount)
+      const sortedTasks = getSortedTasks(tasks, sortType, 0, showingTasksCount);
+
+      taskListElement.innerHTML = ``;
+
+      sortedTasks.slice(0, showingTasksCount)
         .forEach((task) => {
           renderTask(taskListElement, task);
         });
 
-      if (showingTasksCount >= tasks.length) {
-        remove(this._loadMoreButtonComponent);
-      }
+      renderLoadMoreButton();
     });
   }
 }
