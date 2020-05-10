@@ -43,23 +43,30 @@ const renderTask = (taskListElement, task) => {
   renderSection(taskListElement, taskComponent, RenderPosition.BEFOREEND);
 };
 
-const getSortedTasks = (tasks, sortType, from, to) => {
+const renderTasks = (tasks, taskListElement, showingTasksCount, prevTasksCount = 0) => {
+  tasks.slice(prevTasksCount, showingTasksCount)
+    .forEach((task) => {
+      renderTask(taskListElement, task);
+    });
+};
+
+const getSortedTasks = (tasks, sortType) => {
   let sortedTasks = [];
-  const showingTasks = tasks.slice();
 
   switch (sortType) {
     case SortType.DATE_UP:
-      sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+      sortedTasks = tasks.sort((a, b) => a.dueDate - b.dueDate);
       break;
     case SortType.DATE_DOWN:
-      sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+      sortedTasks = tasks.sort((a, b) => b.dueDate - a.dueDate);
       break;
-    case SortType.DEFAULT:
-      sortedTasks = showingTasks;
+    default:
+      sortedTasks = tasks;
       break;
   }
 
-  return sortedTasks.slice(from, to);
+  return sortedTasks;
+
 };
 
 
@@ -85,10 +92,7 @@ export default class BoardController {
         const prevTasksCount = showingTasksCount;
         showingTasksCount = showingTasksCount + CARDS_NUMBER_STEP;
 
-        tasks.slice(prevTasksCount, showingTasksCount)
-        .forEach((task) => {
-          renderTask(taskListElement, task);
-        });
+        renderTasks(tasks, taskListElement, showingTasksCount, prevTasksCount);
 
         if (showingTasksCount >= tasks.length) {
           remove(this._loadMoreButtonComponent);
@@ -110,24 +114,20 @@ export default class BoardController {
     const taskListElement = this._tasksComponent.getElement();
 
     let showingTasksCount = CARDS_NUMBER_STEP;
-    tasks.slice(0, showingTasksCount)
-      .forEach((task) => {
-        renderTask(taskListElement, task);
-      });
+
+    renderTasks(tasks, taskListElement, showingTasksCount);
 
     renderLoadMoreButton();
 
     this._sortComponent.setSortTypeChangeClick((sortType) => {
       showingTasksCount = CARDS_NUMBER_STEP;
 
-      const sortedTasks = getSortedTasks(tasks, sortType, 0, showingTasksCount);
+      const sortedTasks = getSortedTasks([...tasks], sortType);
 
       taskListElement.innerHTML = ``;
 
-      sortedTasks.slice(0, showingTasksCount)
-        .forEach((task) => {
-          renderTask(taskListElement, task);
-        });
+      renderTasks(sortedTasks, taskListElement, showingTasksCount);
+      remove(this._loadMoreButtonComponent);
 
       renderLoadMoreButton();
     });

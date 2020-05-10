@@ -31,7 +31,7 @@ export default class Sort extends AbstractClass {
     return this._currentSortType;
   }
 
-  setSortTypeChangeClick(onObjectCLick) {
+  setSortTypeChangeClick(onObjectClick) {
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
 
@@ -48,7 +48,7 @@ export default class Sort extends AbstractClass {
       this._currentSortType = sortType;
 
 
-      onObjectCLick(this._currentSortType);
+      onObjectClick(this._currentSortType);
     });
 
   }
