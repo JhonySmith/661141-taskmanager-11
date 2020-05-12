@@ -52,19 +52,19 @@ const renderTasks = (tasks, taskListElement, showingTasksCount, prevTasksCount =
 
 const getSortedTasks = (tasks, sortType) => {
   let sortedTasks = [];
+  const copyOfTasks = [...tasks];
 
   switch (sortType) {
     case SortType.DATE_UP:
-      sortedTasks = tasks.sort((a, b) => a.dueDate - b.dueDate);
+      sortedTasks = copyOfTasks.sort((a, b) => a.dueDate - b.dueDate);
       break;
     case SortType.DATE_DOWN:
-      sortedTasks = tasks.sort((a, b) => b.dueDate - a.dueDate);
+      sortedTasks = copyOfTasks.sort((a, b) => b.dueDate - a.dueDate);
       break;
     default:
-      sortedTasks = tasks;
+      sortedTasks = copyOfTasks;
       break;
   }
-
   return sortedTasks;
 
 };
@@ -92,7 +92,9 @@ export default class BoardController {
         const prevTasksCount = showingTasksCount;
         showingTasksCount = showingTasksCount + CARDS_NUMBER_STEP;
 
-        renderTasks(tasks, taskListElement, showingTasksCount, prevTasksCount);
+        const sortedTasks = getSortedTasks(tasks, this._sortComponent.getSortType());
+
+        renderTasks(sortedTasks, taskListElement, showingTasksCount, prevTasksCount);
 
         if (showingTasksCount >= tasks.length) {
           remove(this._loadMoreButtonComponent);
@@ -122,12 +124,13 @@ export default class BoardController {
     this._sortComponent.setSortTypeChangeClick((sortType) => {
       showingTasksCount = CARDS_NUMBER_STEP;
 
-      const sortedTasks = getSortedTasks([...tasks], sortType);
+      const sortedTasks = getSortedTasks(tasks, sortType);
 
       taskListElement.innerHTML = ``;
 
       renderTasks(sortedTasks, taskListElement, showingTasksCount);
       remove(this._loadMoreButtonComponent);
+
 
       renderLoadMoreButton();
     });
