@@ -2,7 +2,7 @@ import {dateTimeConverter} from "../utils/common.js";
 import AbstractComponent from "./abstract-component.js";
 
 const createTaskCardTemlate = (task) => {
-  const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
+  const {description, dueDate, repeatingDays, color, isArchive, isFavorite} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
