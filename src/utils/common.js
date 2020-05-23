@@ -12,8 +12,8 @@ export const formatTime = (date) => {
 };
 
 export const dateTimeConverter = (isDateShowing, dueDate) => {
-  const date = isDateShowing ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
-  const time = isDateShowing ? formatTime(dueDate) : ``;
+  const date = isDateShowing && dueDate ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
+  const time = isDateShowing && dueDate ? formatTime(dueDate) : ``;
 
   return {
     date,

@@ -1,8 +1,18 @@
 import {dateTimeConverter} from "../utils/common.js";
 import AbstractComponent from "./abstract-component.js";
 
+const createButtonMarkup = (name, isActive = true) => {
+  const activeClass = isActive ? `` : `card__btn--disabled`;
+
+  return (
+    `<button type="button" class="card__btn card__btn--${name} ${activeClass}">
+      ${name}
+    </button>`
+  );
+};
+
 const createTaskCardTemlate = (task) => {
-  const {description, dueDate, repeatingDays, color, isArchive, isFavorite} = task;
+  const {description, dueDate, repeatingDays, color} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
@@ -13,25 +23,18 @@ const createTaskCardTemlate = (task) => {
 
   const isRepeatDaysClass = isRepeatingDays ? `card-repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
-  const archiveButtonInactiveClass = isArchive ? `` : `card__btn--disabled`;
-  const favoriteButtonInactiveClass = isFavorite ? `` : `card__btn--disabled`;
+  const editButton = createButtonMarkup(`edit`);
+  const archiveButton = createButtonMarkup(`archive`, !task.isArchive);
+  const favoriteButton = createButtonMarkup(`favorites`, !task.isFavorite);
 
   return (
     `<article class="card card--${color} ${isRepeatDaysClass} ${deadlineClass}">
             <div class="card__form">
               <div class="card__inner">
                 <div class="card__control">
-                  <button type="button" class="card__btn card__btn--edit">
-                    edit
-                  </button>
-                  <button type="button" class="card__btn card__btn--archive ${archiveButtonInactiveClass}">
-                    archive
-                  </button>
-                  <button
-                    type="button"
-                    class="card__btn card__btn--favorites ${favoriteButtonInactiveClass}">
-                    favorites
-                  </button>
+                  ${editButton}
+                  ${archiveButton}
+                  ${favoriteButton}
                 </div>
 
                 <div class="card__color-bar">
@@ -62,7 +65,7 @@ const createTaskCardTemlate = (task) => {
   );
 };
 
-export default class Task extends AbstractComponent {
+export default class TaskComponent extends AbstractComponent {
   constructor(task) {
     super();
 
@@ -75,6 +78,16 @@ export default class Task extends AbstractComponent {
 
   setOnClick(onObjectClick) {
     this.getElement().querySelector(`.card__btn--edit`)
+    .addEventListener(`click`, onObjectClick);
+  }
+
+  setOnFavoriteButtonClick(onObjectClick) {
+    this.getElement().querySelector(`.card__btn--favorites`)
+    .addEventListener(`click`, onObjectClick);
+  }
+
+  setOnArchiveButtonClick(onObjectClick) {
+    this.getElement().querySelector(`.card__btn--archive`)
     .addEventListener(`click`, onObjectClick);
   }
 }
